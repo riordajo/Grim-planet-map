@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Worlds List</title>
+    <title>Cosmic Codex</title>
     <style>
         @font-face {
             src: url(media/fonts/consola.TTF);
@@ -15,19 +15,36 @@
             padding: 20px;
         }
 
+        .header-title{
+            color:blue;
+            margin:auto;
+            font-size: 300%;
+            padding: 1rem;
+            background-color: beige;
+        }
+
         .world {
             margin-bottom: 20px;
+            margin: auto;
+            width: 8rem;
+            border: 3px solid green;
+            padding: 10px;
         }
 
         .world img {
             display: block;
             margin-bottom: 10px;
-            max-width: 200px;
+            max-width: 100%;
         }
 
-        #worldsContainer{
-            color:green;
+        #worldsContainer {
+            color: green;
             background-color: lightgrey;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+            gap: 20px;
+            padding: 10px;
         }
     </style>
     <script>
@@ -66,7 +83,9 @@
     </script>
 </head>
 <body>
-    <h1>COSMIC-CODEX</h1>
-    <div id="worldsContainer"></div>
+    <center>
+        <p class="header-title">COSMIC-CODEX</p>
+        <div id="worldsContainer"></div>
+    </center>
 </body>
 </html>
