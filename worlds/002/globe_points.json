@@ -1,0 +1,138 @@
+[
+  {
+    "lat": 0.6737,
+    "lon": 23.47295,
+    "name": "Apollo 11",
+    "type": "Apollo",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": -3.01184,
+    "lon": -23.42156,
+    "name": "Apollo 12",
+    "type": "Apollo",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": -3.64450,
+    "lon": -17.47753,
+    "name": "Apollo 14",
+    "type": "Apollo",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": 26.13407,
+    "lon": 3.62981,
+    "name": "Apollo 15",
+    "type": "Apollo",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": -8.97477,
+    "lon": 15.49749,
+    "name": "Apollo 16",
+    "type": "Apollo",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": 20.18935,
+    "lon": 30.76996,
+    "name": "Apollo 17",
+    "type": "Apollo",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": 29.1,
+    "lon": 0,
+    "name": "Luna 2",
+    "type": "Luna",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": 7.08,
+    "lon": -64.37,
+    "name": "Luna 9",
+    "type": "Luna",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": 18.87,
+    "lon": -62.05,
+    "name": "Luna 13",
+    "type": "Luna",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": -0.68,
+    "lon": 56.3,
+    "name": "Luna 16",
+    "type": "Luna",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": 38.28,
+    "lon": -35,
+    "name": "Luna 17",
+    "type": "Luna",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": 3.57,
+    "lon": 56.5,
+    "name": "Luna 20",
+    "type": "Luna",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": 25.51,
+    "lon": 30.38,
+    "name": "Luna 21",
+    "type": "Luna",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": 12.25,
+    "lon": 62.2,
+    "name": "Luna 24",
+    "type": "Luna",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": -84.72,
+    "lon": -49.62,
+    "name": "LCROSS Probe",
+    "type": "Lunar Crater Observation and Sensing Satellite",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": 44.12,
+    "lon": 19.51,
+    "name": "Chang'e 3",
+    "type": "Chinese Lunar Exploration",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": -45.4446,
+    "lon": 177.5991,
+    "name": "Chang'e 4",
+    "type": "Chinese Lunar Exploration",
+    "country": "",
+    "elevation": 0
+  }
+]

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worlds List</title>
+    <style>
+        @font-face {
+            src: url(media/fonts/consola.TTF);
+            font-family: consola;
+        }
+
+        body {
+            font-family: consola;
+            padding: 20px;
+        }
+
+        .world {
+            margin-bottom: 20px;
+        }
+
+        .world img {
+            display: block;
+            margin-bottom: 10px;
+            max-width: 200px;
+        }
+
+        #worldsContainer{
+            color:green;
+            background-color: lightgrey;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const worlds = [
+                { id: '001', name: 'Earth', previewImage: 'worlds/001/preview.jpg' },
+                { id: '002', name: 'Moon', previewImage: 'worlds/002/preview.jpg' },
+            ];
+
+            const container = document.getElementById('worldsContainer');
+
+            worlds.forEach(world => {
+                const worldDiv = document.createElement('div');
+                worldDiv.className = 'world';
+
+                const img = document.createElement('img');
+                img.src = world.previewImage;
+                img.alt = `${world.name} Preview`;
+
+                const name = document.createElement('div');
+                name.textContent = `ID:${world.id}, ${world.name} `;
+
+                const button = document.createElement('button');
+                button.textContent = `View ${world.name}`;
+                button.onclick = function() {
+                    window.location.href = `view.html?worldId=${world.id}`;
+                };
+
+                worldDiv.appendChild(img);
+                worldDiv.appendChild(name);
+                worldDiv.appendChild(button);
+
+                container.appendChild(worldDiv);
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>COSMIC-CODEX</h1>
+    <div id="worldsContainer"></div>
+</body>
+</html>

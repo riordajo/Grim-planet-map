@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            margin: 0;
+            position: relative;
+        }
+
+        #loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        #loading-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        #globeViz {
+            display: none; /* Hide the globe initially */
+        }
+    </style>
+
+    <!--
+    All credit goes to https://github.com/vasturiano/globe.gl & https://globe.gl/
+    -->
+
+    <script src="scripts/three.js"></script>
+    <script src="scripts/globegl.js"></script>
+    <script src="scripts/dist_d3.min.js"></script>
+    <script src="scripts/dist_polished.js"></script>
+</head>
+
+<body>
+    <div id="loading-overlay">
+        <div id="loading-text">Loading...</div>
+    </div>
+
+    <div id="globeViz"></div>
+
+    <script>
+        const catColor = d3.scaleOrdinal(d3.schemeCategory10.map(col => polished.transparentize(0.2, col)));
+
+        const getAlt = d => d.elevation * 5e-5;
+
+        const getTooltip = d => `
+                  <div style="text-align: center">
+                    <div><b>${d.name}</b>, ${d.country}</div>
+                    <div>(${d.type})</div>
+                    <div>Elevation: <em>${d.elevation}</em>m</div>
+                  </div>
+                `;
+
+        // Function to get the world ID from the URL
+        function getWorldIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('worldId') || 'default';  // Default world ID if not provided
+        }
+
+        const worldId = getWorldIdFromUrl();
+
+        // Construct paths to images and data file
+        const globeImageUrl = `worlds/${worldId}/globe.jpg`;
+        const bumpImageUrl = `worlds/${worldId}/bump.png`;
+        const infoFileUrl = `worlds/${worldId}/info.txt`;
+        const globe_points_url = `worlds/${worldId}/globe_points.json`;
+
+        const myGlobe = Globe()
+            .globeImageUrl(globeImageUrl)
+            .backgroundImageUrl('media/png/night-sky.png')
+            .bumpImageUrl(bumpImageUrl)
+            .pointLat('lat')
+            .pointLng('lon')
+            .pointAltitude(getAlt)
+            .pointRadius(0.2)
+            .pointColor(d => catColor(d.type))
+            .pointLabel(getTooltip)
+            .labelLat('lat')
+            .labelLng('lon')
+            .labelAltitude(d => getAlt(d) + 1e-6)
+            .labelDotRadius(0.12)
+            .labelDotOrientation(() => 'bottom')
+            .labelColor(d => catColor(d.type))
+            .labelText('name')
+            .labelSize(0.9)
+            .labelResolution(2)
+            .labelLabel(getTooltip)
+            .onGlobeReady(() => {
+                // Fetch the additional world data
+                fetch(infoFileUrl).then(res => res.text()).then(data => {
+                    console.log('World Info:', data);  // Process the data as needed
+                });
+
+                fetch(globe_points_url).then(res => res.json()).then(volcanoes => {
+                    // Hide the loading overlay and display the globe when the image is loaded.
+                    document.getElementById('loading-overlay').style.display = 'none';
+                    document.getElementById('globeViz').style.display = 'block';
+
+                    myGlobe.pointsData(volcanoes)
+                        .labelsData(volcanoes);
+                });
+            })
+            (document.getElementById('globeViz'));
+    </script>
+</body>
+</html>
