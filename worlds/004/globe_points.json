@@ -1,0 +1,30 @@
+[
+
+  {
+    "lat": 5.6737,
+    "lon": -175.47295,
+    "name": "Confinement Facility",
+    "type": "Intergalactic Jail",
+    "country": "",
+    "elevation": 0
+  },
+
+  {
+    "lat": -10.6737,
+    "lon": -175.47295,
+    "name": "Celestial Gateway Terminal",
+    "type": "Ship Port",
+    "country": "",
+    "elevation": 0
+  },
+
+  {
+    "lat": 42.6737,
+    "lon": -305.47295,
+    "name": "Lookout-2",
+    "type": "Outpost",
+    "country": "",
+    "elevation": 0
+  }
+
+]

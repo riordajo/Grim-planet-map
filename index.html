@@ -50,8 +50,10 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const worlds = [
-                { id: '001', name: 'Earth', previewImage: 'worlds/001/preview.jpg' },
-                { id: '002', name: 'Moon', previewImage: 'worlds/002/preview.jpg' },
+                { id: '001', coordinate: '52,32',  name: 'AEURF', previewImage: 'worlds/001/preview.jpg' },
+                { id: '002', coordinate: '53,33', name: 'MOON', previewImage: 'worlds/002/preview.jpg' },
+                { id: '003', coordinate: '53,33', name: 'THALASSIA', previewImage: 'worlds/003/preview.jpg' },
+                { id: '004', coordinate: '53,33', name: 'GAKI MAJOR', previewImage: 'worlds/004/preview.jpg' },
             ];
 
             const container = document.getElementById('worldsContainer');
@@ -64,17 +66,25 @@
                 img.src = world.previewImage;
                 img.alt = `${world.name} Preview`;
 
+                const id = document.createElement('div');
+                id.textContent = `ID: ${world.id}`;
+
                 const name = document.createElement('div');
-                name.textContent = `ID:${world.id}, ${world.name} `;
+                name.textContent = `${world.name} `;
+
+                const coordinate = document.createElement('div');
+                coordinate.textContent = `CORD: ${world.coordinate}`;
 
                 const button = document.createElement('button');
-                button.textContent = `View ${world.name}`;
+                button.textContent = `View: ${world.name}`;
                 button.onclick = function() {
                     window.location.href = `view.html?worldId=${world.id}`;
                 };
 
                 worldDiv.appendChild(img);
+                worldDiv.appendChild(id);
                 worldDiv.appendChild(name);
+                worldDiv.appendChild(coordinate);
                 worldDiv.appendChild(button);
 
                 container.appendChild(worldDiv);
