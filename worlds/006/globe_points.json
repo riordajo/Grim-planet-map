@@ -1,10 +1,51 @@
 [
   
   {
-    "lat": 22.6737,
-    "lon": 310.47295,
-    "name": "Humid Haven",
+    "lat": -22.6737,
+    "lon": 12.47295,
+    "name": "Dragon Island",
     "type": "Outpost",
+    "color": "#FFAC1C",
+    "country": "",
+    "elevation": 200
+  },
+
+  {
+    "lat": 5.6737,
+    "lon": 31.47295,
+    "name": "Fire Training Ground",
+    "type": "Outpost",
+    "color": "#D22B2B",
+    "country": "",
+    "elevation": 200
+  },
+
+  {
+    "lat":62.6737,
+    "lon": 3.47295,
+    "name": "Snow Klan",
+    "type": "Outpost",
+    "color": "#40B5AD",
+    "country": "",
+    "elevation": 200
+  },
+
+  {
+    "lat": 9.6737,
+    "lon": -40.47295,
+    "name": "Rock Mold",
+    "type": "Natural Formation /  Outpost",
+    "color": "#996600",
+    "country": "",
+    "elevation": 200
+  },
+
+  {
+    "lat": 6.6737,
+    "lon": -115.47295,
+    "name": "Vander Ridge",
+    "type": "Natural Formation",
+    "color": " #6600FF",
     "country": "",
     "elevation": 200
   }

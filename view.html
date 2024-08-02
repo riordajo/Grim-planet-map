@@ -143,42 +143,42 @@
         const globe_points_url = `worlds/${worldId}/globe_points.json`;
 
         const myGlobe = Globe()
-            .globeImageUrl(globeImageUrl)
-            .backgroundImageUrl('media/png/night-sky.png')
-            .bumpImageUrl(bumpImageUrl)
-            .pointLat('lat')
-            .pointLng('lon')
-            .pointAltitude(getAlt)
-            .pointRadius(0.5)
-            .pointColor(d => catColor(d.type))
-            .pointLabel(getTooltip)
-            .labelLat('lat')
-            .labelLng('lon')
-            .labelAltitude(d => getAlt(d) + 1e-6)
-            .labelDotRadius(0.12)
-            .labelDotOrientation(() => 'bottom')
-            .labelColor(d => catColor(d.type))
-            .labelText('name')
-            .labelSize(2)
-            .labelResolution(10)
-            .labelLabel(getTooltip)
-            .onGlobeReady(() => {
-                // Fetch the additional world data
-                fetch(infoFileUrl).then(res => res.text()).then(data => {
-                    console.log('World Info:', data);  // Process the data as needed
-                    document.getElementById('world-data').innerText = data;
-                });
+    .globeImageUrl(globeImageUrl)
+    .backgroundImageUrl('media/png/night-sky.png')
+    .bumpImageUrl(bumpImageUrl)
+    .pointLat('lat')
+    .pointLng('lon')
+    .pointAltitude(getAlt)
+    .pointRadius(0.5)
+    .pointColor(d => d.color || catColor(d.type))  // Use specific color if available, otherwise use catColor
+    .pointLabel(getTooltip)
+    .labelLat('lat')
+    .labelLng('lon')
+    .labelAltitude(d => getAlt(d) + 1e-6)
+    .labelDotRadius(0.12)
+    .labelDotOrientation(() => 'bottom')
+    .labelColor(d => d.color || catColor(d.type))  // Use specific color if available, otherwise use catColor
+    .labelText('name')
+    .labelSize(2)
+    .labelResolution(10)
+    .labelLabel(getTooltip)
+    .onGlobeReady(() => {
+        // Fetch the additional world data
+        fetch(infoFileUrl).then(res => res.text()).then(data => {
+            console.log('World Info:', data);  // Process the data as needed
+            document.getElementById('world-data').innerText = data;
+        });
 
-                fetch(globe_points_url).then(res => res.json()).then(volcanoes => {
-                    // Hide the loading overlay and display the globe when the image is loaded.
-                    document.getElementById('loading-overlay').style.display = 'none';
-                    document.getElementById('globeViz').style.display = 'block';
+        fetch(globe_points_url).then(res => res.json()).then(volcanoes => {
+            // Hide the loading overlay and display the globe when the image is loaded.
+            document.getElementById('loading-overlay').style.display = 'none';
+            document.getElementById('globeViz').style.display = 'block';
 
-                    myGlobe.pointsData(volcanoes)
-                        .labelsData(volcanoes);
-                });
-            })
-            (document.getElementById('globeViz'));
+            myGlobe.pointsData(volcanoes)
+                .labelsData(volcanoes);
+        });
+    })
+    (document.getElementById('globeViz'));
 
         // Resize canvas on window resize
         function resizeCanvas() {
