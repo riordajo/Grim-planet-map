@@ -15,12 +15,13 @@
             padding: 20px;
         }
 
-        .header-title{
-            color:blue;
-            margin:auto;
+        .header-title {
+            color: blue;
+            margin: auto;
             font-size: 300%;
             padding: 1rem;
             background-color: beige;
+            text-align: center;
         }
 
         .world {
@@ -28,7 +29,7 @@
             margin: auto;
             width: 8rem;
             border: 3px solid green;
-            padding: 10px;
+
         }
 
         .world img {
@@ -43,17 +44,33 @@
             width: 100%;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-            gap: 20px;
-            padding: 10px;
+        }
+
+        #canvasContainer {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        canvas {
+            border: 1px solid black;
+            transition: transform 1s ease;
+            transform-origin: center;
+            max-width: 20rem;
         }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const worlds = [
-                { id: '001', coordinate: '52,32',  name: 'AEURF', previewImage: 'worlds/001/preview.jpg' },
-                { id: '002', coordinate: '53,33', name: 'MOON', previewImage: 'worlds/002/preview.jpg' },
-                { id: '003', coordinate: '53,33', name: 'THALASSIA', previewImage: 'worlds/003/preview.jpg' },
-                { id: '004', coordinate: '53,33', name: 'GAKI MAJOR', previewImage: 'worlds/004/preview.jpg' },
+                { id: '001', coordinate: '12,95',  name: 'EARTH', previewImage: 'worlds/001/preview.jpg' },
+                { id: '002', coordinate: '20,89', name: 'MOON', previewImage: 'worlds/002/preview.jpg' },
+                { id: '003', coordinate: '49,12', name: 'THALASSIA', previewImage: 'worlds/003/preview.jpg' },
+                { id: '004', coordinate: '70,70', name: 'GAKI MAJOR', previewImage: 'worlds/004/preview.jpg' },
+                { id: '005', coordinate: '12,37', name: 'TINERIN', previewImage: 'worlds/005/preview.jpg' },
+                { id: '006', coordinate: '37,45', name: 'EMPTY', previewImage: 'worlds/006/preview.jpg' },
+                { id: '007', coordinate: '35,27', name: 'EMPTY', previewImage: 'worlds/007/preview.jpg' },
             ];
 
             const container = document.getElementById('worldsContainer');
@@ -89,13 +106,40 @@
 
                 container.appendChild(worldDiv);
             });
+
+            const canvas = document.getElementById('planetCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Draw grid
+            const gridSize = 100;
+            const cellSize = canvas.width / gridSize;
+            ctx.strokeStyle = '#fd8061'; // Darker grid line color
+            for (let i = 0; i <= gridSize; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * cellSize, 0);
+                ctx.lineTo(i * cellSize, canvas.height);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, i * cellSize);
+                ctx.lineTo(canvas.width, i * cellSize);
+                ctx.stroke();
+            }
+
+            // Plot planets
+            ctx.fillStyle = '#199515';
+            ctx.font = '1.3rem consola';
+            worlds.forEach(world => {
+                const [x, y] = world.coordinate.split(',').map(Number);
+                ctx.fillText(world.name, x * cellSize, canvas.height - y * cellSize + cellSize);
+            });
         });
     </script>
 </head>
 <body>
-    <center>
-        <p class="header-title">COSMIC-CODEX</p>
-        <div id="worldsContainer"></div>
-    </center>
+    <p class="header-title">COSMIC-CODEX</p>
+    <div id="canvasContainer">
+        <canvas id="planetCanvas" width="500" height="500"></canvas>
+    </div>
+    <div id="worldsContainer"></div>
 </body>
 </html>

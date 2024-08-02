@@ -1,0 +1,39 @@
+[
+  
+  {
+    "lat": 22.6737,
+    "lon": 310.47295,
+    "name": "Humid Haven",
+    "type": "Outpost",
+    "country": "",
+    "elevation": 200
+  },
+
+  {
+    "lat": 350.6737,
+    "lon": 320.47295,
+    "name": "Mashers",
+    "type": "Outpost",
+    "country": "",
+    "elevation": 200
+  },
+
+  {
+    "lat": 349.6737,
+    "lon": 340.47295,
+    "name": "The Deep",
+    "type": "Natural Formation",
+    "country": "",
+    "elevation": 200
+  },
+
+  {
+    "lat": 5.6737,
+    "lon": 262.07295,
+    "name": "The Jimmy Household",
+    "type": "Outpost",
+    "country": "",
+    "elevation": 200
+  }
+
+]
