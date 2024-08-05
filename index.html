@@ -60,6 +60,24 @@
             transform-origin: center;
             max-width: 20rem;
         }
+
+
+        .converter {
+            margin: auto;
+            padding: 2rem;
+            background-color: lightgray;
+            text-align: center;
+        }
+
+        .converter input, .converter select, .converter button {
+            font-size: 1.2rem;
+            margin: 0.5rem;
+        }
+
+        .result {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -137,9 +155,56 @@
 </head>
 <body>
     <p class="header-title">COSMIC-CODEX</p>
+
+    
     <div id="canvasContainer">
         <canvas id="planetCanvas" width="500" height="500"></canvas>
     </div>
     <div id="worldsContainer"></div>
+    
+
+    <div class="converter">
+        <h2>Currency Converter</h2>
+        <input type="number" id="amount" placeholder="Enter amount" />
+        <select id="fromCurrency">
+            <option value="imperial">Imperial Credit</option>
+            <option value="thalassian">Thalassian Seashell</option>
+            <!-- Add more currencies as needed -->
+        </select>
+        to
+        <select id="toCurrency">
+            <option value="imperial">Imperial Credit</option>
+            <option value="thalassian">Thalassian Seashell</option>
+            <!-- Add more currencies as needed -->
+        </select>
+        <button onclick="convertCurrency()">Convert</button>
+        <p class="result" id="result"></p>
+    </div>
+
+    <script>
+        const exchangeRates = {
+            imperial: 1, // Imperial Credit is the base value
+            thalassian: 0.352, // 1 Imperial Credit = 5 Thalassian Seashells
+            // Add more currencies and their exchange rates relative to Imperial Credit
+        };
+
+        function convertCurrency() {
+            const amount = document.getElementById('amount').value;
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+
+            if (amount === '' || isNaN(amount)) {
+                alert('Please enter a valid amount');
+                return;
+            }
+
+            const fromRate = exchangeRates[fromCurrency];
+            const toRate = exchangeRates[toCurrency];
+
+            const convertedAmount = (amount * fromRate) / toRate;
+
+            document.getElementById('result').textContent = `${amount} ${fromCurrency.charAt(0).toUpperCase() + fromCurrency.slice(1)} = ${convertedAmount.toFixed(2)} ${toCurrency.charAt(0).toUpperCase() + toCurrency.slice(1)}`;
+        }
+    </script>
 </body>
 </html>
