@@ -2,14 +2,12 @@
 <html lang="en">
 <head>
     <style>
-
         @font-face {
             src: url(media/fonts/consola.TTF);
             font-family: consola;
-            
         }
 
-        .console-font{
+        .console-font {
             font-size: 120%;
             font-family: consola;
             letter-spacing: 2px;
@@ -43,7 +41,7 @@
         #loading-text {
             font-size: 24px;
             font-weight: bold;
-            color:white;
+            color: white;
         }
 
         .loading-ico {
@@ -74,8 +72,6 @@
         .world-data {
             color: white;
             padding: 20px;
-
-
             position: absolute;
             top: 5rem;
             left: 1rem;
@@ -89,11 +85,18 @@
             font-weight: bold;
             max-width: 30rem;
         }
-    </style>
 
-    <!--
-    All credit goes to https://github.com/vasturiano/globe.gl & https://globe.gl/
-    -->
+        .hide-button {
+            display: block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
 
     <script src="scripts/three.js"></script>
     <script src="scripts/globegl.js"></script>
@@ -104,7 +107,11 @@
 <body>
     <a href="index.html" class="back-button console-font">Home</a>
 
-    <div class="world-data console-font" id="world-data"></div>
+    <div class="world-data console-font" >
+        <div id="world-data"></div>
+        <button class="hide-button" onclick="toggleWorldData()">Toggle</button>
+    </div>
+    
 
     <div id="loading-overlay">
         <div id="loading-container">
@@ -121,66 +128,60 @@
         const getAlt = d => d.elevation * 5e-5;
 
         const getTooltip = d => `
-                  <div style="text-align: center">
-                    <div><b>${d.name}</b>, ${d.country}</div>
-                    <div>(${d.type})</div>
-                    <div>Elevation: <em>${d.elevation}</em>m</div>
-                  </div>
-                `;
+            <div style="text-align: center">
+                <div><b>${d.name}</b>, ${d.country}</div>
+                <div>(${d.type})</div>
+                <div>Elevation: <em>${d.elevation}</em>m</div>
+            </div>
+        `;
 
-        // Function to get the world ID from the URL
         function getWorldIdFromUrl() {
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('worldId') || 'default';  // Default world ID if not provided
+            return urlParams.get('worldId') || 'default';
         }
 
         const worldId = getWorldIdFromUrl();
 
-        // Construct paths to images and data file
         const globeImageUrl = `worlds/${worldId}/globe.jpg`;
         const bumpImageUrl = `worlds/${worldId}/bump.png`;
         const infoFileUrl = `worlds/${worldId}/info.txt`;
         const globe_points_url = `worlds/${worldId}/globe_points.json`;
 
         const myGlobe = Globe()
-    .globeImageUrl(globeImageUrl)
-    .backgroundImageUrl('media/png/night-sky.png')
-    .bumpImageUrl(bumpImageUrl)
-    .pointLat('lat')
-    .pointLng('lon')
-    .pointAltitude(getAlt)
-    .pointRadius(0.5)
-    .pointColor(d => d.color || catColor(d.type))  // Use specific color if available, otherwise use catColor
-    .pointLabel(getTooltip)
-    .labelLat('lat')
-    .labelLng('lon')
-    .labelAltitude(d => getAlt(d) + 1e-6)
-    .labelDotRadius(0.12)
-    .labelDotOrientation(() => 'bottom')
-    .labelColor(d => d.color || catColor(d.type))  // Use specific color if available, otherwise use catColor
-    .labelText('name')
-    .labelSize(2)
-    .labelResolution(10)
-    .labelLabel(getTooltip)
-    .onGlobeReady(() => {
-        // Fetch the additional world data
-        fetch(infoFileUrl).then(res => res.text()).then(data => {
-            console.log('World Info:', data);  // Process the data as needed
-            document.getElementById('world-data').innerText = data;
-        });
+            .globeImageUrl(globeImageUrl)
+            .backgroundImageUrl('media/png/night-sky.png')
+            .bumpImageUrl(bumpImageUrl)
+            .pointLat('lat')
+            .pointLng('lon')
+            .pointAltitude(getAlt)
+            .pointRadius(0.5)
+            .pointColor(d => d.color || catColor(d.type))
+            .pointLabel(getTooltip)
+            .labelLat('lat')
+            .labelLng('lon')
+            .labelAltitude(d => getAlt(d) + 1e-6)
+            .labelDotRadius(0.12)
+            .labelDotOrientation(() => 'bottom')
+            .labelColor(d => d.color || catColor(d.type))
+            .labelText('name')
+            .labelSize(2)
+            .labelResolution(10)
+            .labelLabel(getTooltip)
+            .onGlobeReady(() => {
+                fetch(infoFileUrl).then(res => res.text()).then(data => {
+                    console.log('World Info:', data);
+                    document.getElementById('world-data').innerText = data;
+                });
 
-        fetch(globe_points_url).then(res => res.json()).then(volcanoes => {
-            // Hide the loading overlay and display the globe when the image is loaded.
-            document.getElementById('loading-overlay').style.display = 'none';
-            document.getElementById('globeViz').style.display = 'block';
+                fetch(globe_points_url).then(res => res.json()).then(volcanoes => {
+                    document.getElementById('loading-overlay').style.display = 'none';
+                    document.getElementById('globeViz').style.display = 'block';
 
-            myGlobe.pointsData(volcanoes)
-                .labelsData(volcanoes);
-        });
-    })
-    (document.getElementById('globeViz'));
+                    myGlobe.pointsData(volcanoes)
+                        .labelsData(volcanoes);
+                });
+            })(document.getElementById('globeViz'));
 
-        // Resize canvas on window resize
         function resizeCanvas() {
             const globeViz = document.getElementById('globeViz');
             globeViz.style.width = `${window.innerWidth}px`;
@@ -191,8 +192,16 @@
 
         window.addEventListener('resize', resizeCanvas);
 
-        // Initial resize to set the correct size
         resizeCanvas();
+
+        function toggleWorldData() {
+            const worldData = document.getElementById('world-data');
+            if (worldData.style.display === 'none') {
+                worldData.style.display = 'block';
+            } else {
+                worldData.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
