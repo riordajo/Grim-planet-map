@@ -87,12 +87,13 @@
         // While yes, i think we both know that you could just input one of these ids into the url bar,
         // I hope that for the sake of keeping the game fun and mysterious, you do not look at worlds you were not given access too.
 
-        // ?unlocked=2374,3362,2595,5108,6703
+        // ?unlocked=2374,3362,2595,5108,6703,3164
         const worlds = [
             { id: '2374', coordinate: '49,12', name: 'THALASSIA' },
             { id: '3362', coordinate: '70,70', name: 'GAKI MAJOR' },
             { id: '2595', coordinate: '12,37', name: 'TINERIN' },
-            { id: '5108', coordinate: '37,45', name: 'ELEMENTAL' },
+            { id: '5108', coordinate: '12,15', name: 'ELEMENTAL' },
+            { id: '3164', coordinate: '37,45', name: 'GRIEA 26V' },
             { id: '6703', coordinate: '35,27', name: 'EMPTY' },
         ];
 
@@ -158,7 +159,7 @@
 
         // Plot unlocked planets
         ctx.fillStyle = '#199515';
-        ctx.font = '1.3rem consola';
+        ctx.font = '1rem consola';
         unlockedWorldData.forEach(world => {
             const [x, y] = world.coordinate.split(',').map(Number);
             ctx.fillText(world.name, x * cellSize, canvas.height - y * cellSize + cellSize);

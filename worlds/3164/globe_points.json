@@ -1,0 +1,36 @@
+[
+  {
+    "lat": -55.6737,
+    "lon": 10.47295,
+    "name": "Reindeer Village",
+    "type": "Outpost",
+    "country": "",
+    "elevation": 100
+  },
+  {
+    "lat": -10.6737,
+    "lon": -20.47295,
+    "name": "Imperial Outpost",
+    "type": "Outpost",
+    "country": "",
+    "elevation": 100
+  },
+  {
+    "lat": 30.6737,
+    "lon": -85.47295,
+    "name": "Iron Bound",
+    "type": "Outpost",
+    "country": "",
+    "elevation": 0
+  },
+  {
+    "lat": 35.6737,
+    "lon": -35.47295,
+    "name": "Manda",
+    "type": "phantom location",
+    "country": "",
+    "elevation": 0
+  }
+
+
+]
