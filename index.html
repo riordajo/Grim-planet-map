@@ -79,79 +79,94 @@
             margin-top: 1rem;
         }
     </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const worlds = [
-                //{ id: '001', coordinate: '12,95',  name: 'EARTH', previewImage: 'worlds/001/preview.jpg' },
-                //{ id: '002', coordinate: '20,89', name: 'MOON', previewImage: 'worlds/002/preview.jpg' },
-                { id: '003', coordinate: '49,12', name: 'THALASSIA', previewImage: 'worlds/003/preview.jpg' },
-                { id: '004', coordinate: '70,70', name: 'GAKI MAJOR', previewImage: 'worlds/004/preview.jpg' },
-                { id: '005', coordinate: '12,37', name: 'TINERIN', previewImage: 'worlds/005/preview.jpg' },
-                { id: '006', coordinate: '37,45', name: 'ELEMENTAL', previewImage: 'worlds/006/preview.jpg' },
-                { id: '007', coordinate: '35,27', name: 'EMPTY', previewImage: 'worlds/007/preview.jpg' },
-            ];
 
-            const container = document.getElementById('worldsContainer');
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
 
-            worlds.forEach(world => {
-                const worldDiv = document.createElement('div');
-                worldDiv.className = 'world';
+        // Dear any players of this campaign:
+        // While yes, i think we both know that you could just input one of these ids into the url bar,
+        // I hope that for the sake of keeping the game fun and mysterious, you do not look at worlds you were not given access too.
 
-                const img = document.createElement('img');
-                img.src = world.previewImage;
-                img.alt = `${world.name} Preview`;
+        // ?unlocked=2374,3362,2595,5108,6703
+        const worlds = [
+            { id: '2374', coordinate: '49,12', name: 'THALASSIA' },
+            { id: '3362', coordinate: '70,70', name: 'GAKI MAJOR' },
+            { id: '2595', coordinate: '12,37', name: 'TINERIN' },
+            { id: '5108', coordinate: '37,45', name: 'ELEMENTAL' },
+            { id: '6703', coordinate: '35,27', name: 'EMPTY' },
+        ];
 
-                const id = document.createElement('div');
-                id.textContent = `ID: ${world.id}`;
+        const container = document.getElementById('worldsContainer');
 
-                const name = document.createElement('div');
-                name.textContent = `${world.name} `;
+        // Parse the URL to get the "unlocked" parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const unlockedWorlds = urlParams.get('unlocked')?.split(',') || [];
 
-                const coordinate = document.createElement('div');
-                coordinate.textContent = `CORD: ${world.coordinate}`;
+        // Filter the worlds array based on unlocked IDs
+        const unlockedWorldData = worlds.filter(world => unlockedWorlds.includes(world.id));
 
-                const button = document.createElement('button');
-                button.textContent = `View: ${world.name}`;
-                button.onclick = function() {
-                    window.location.href = `view.html?worldId=${world.id}`;
-                };
+        // Display only unlocked worlds
+        unlockedWorldData.forEach(world => {
+            const worldDiv = document.createElement('div');
+            worldDiv.className = 'world';
 
-                worldDiv.appendChild(img);
-                worldDiv.appendChild(id);
-                worldDiv.appendChild(name);
-                worldDiv.appendChild(coordinate);
-                worldDiv.appendChild(button);
+            const img = document.createElement('img');
+            img.src = `worlds/${world.id}/preview.jpg`; // Dynamically construct the image path
+            img.alt = `${world.name} Preview`;
 
-                container.appendChild(worldDiv);
-            });
+            const id = document.createElement('div');
+            id.textContent = `ID: ${world.id}`;
 
-            const canvas = document.getElementById('planetCanvas');
-            const ctx = canvas.getContext('2d');
+            const name = document.createElement('div');
+            name.textContent = `${world.name}`;
 
-            // Draw grid
-            const gridSize = 100;
-            const cellSize = canvas.width / gridSize;
-            ctx.strokeStyle = '#fd8061'; // Darker grid line color
-            for (let i = 0; i <= gridSize; i++) {
-                ctx.beginPath();
-                ctx.moveTo(i * cellSize, 0);
-                ctx.lineTo(i * cellSize, canvas.height);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.moveTo(0, i * cellSize);
-                ctx.lineTo(canvas.width, i * cellSize);
-                ctx.stroke();
-            }
+            const coordinate = document.createElement('div');
+            coordinate.textContent = `CORD: ${world.coordinate}`;
 
-            // Plot planets
-            ctx.fillStyle = '#199515';
-            ctx.font = '1.3rem consola';
-            worlds.forEach(world => {
-                const [x, y] = world.coordinate.split(',').map(Number);
-                ctx.fillText(world.name, x * cellSize, canvas.height - y * cellSize + cellSize);
-            });
+            const button = document.createElement('button');
+            button.textContent = `View: ${world.name}`;
+            button.onclick = function () {
+                window.location.href = `view.html?worldId=${world.id}`;
+            };
+
+            worldDiv.appendChild(img);
+            worldDiv.appendChild(id);
+            worldDiv.appendChild(name);
+            worldDiv.appendChild(coordinate);
+            worldDiv.appendChild(button);
+
+            container.appendChild(worldDiv);
         });
-    </script>
+
+        const canvas = document.getElementById('planetCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Draw grid
+        const gridSize = 100;
+        const cellSize = canvas.width / gridSize;
+        ctx.strokeStyle = '#fd8061'; // Darker grid line color
+        for (let i = 0; i <= gridSize; i++) {
+            ctx.beginPath();
+            ctx.moveTo(i * cellSize, 0);
+            ctx.lineTo(i * cellSize, canvas.height);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, i * cellSize);
+            ctx.lineTo(canvas.width, i * cellSize);
+            ctx.stroke();
+        }
+
+        // Plot unlocked planets
+        ctx.fillStyle = '#199515';
+        ctx.font = '1.3rem consola';
+        unlockedWorldData.forEach(world => {
+            const [x, y] = world.coordinate.split(',').map(Number);
+            ctx.fillText(world.name, x * cellSize, canvas.height - y * cellSize + cellSize);
+        });
+    });
+</script>
+
+
 </head>
 <body>
     <p class="header-title">COSMIC-CODEX</p>
